@@ -94,6 +94,7 @@ class _MyAppState extends State<MyApp> {
             content: base64Image,
           ),
         );
+        bill.add(LineText(linefeed: 1));
 
         await bluetoothPrint.printReceipt(config, bill);
       }
