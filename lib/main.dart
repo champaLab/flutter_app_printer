@@ -68,36 +68,39 @@ class _MyAppState extends State<MyApp> {
   }
 
   void printImage() async {
-    Map<String, dynamic> config = Map();
-    config['width'] = 40;
-    config['height'] = 70;
-    config['gap'] = 2;
+    try {
+      Uint8List? screenshotBytes = await screenshotController.capture();
 
-    List<LineText> list = [];
-    Uint8List? screenshotBytes = await screenshotController.capture();
-    if (screenshotBytes == null) {
-      print('screenshotBytes is null');
-      return;
+      Map<String, dynamic> config = {};
+      List<LineText> bill = [];
+
+      if (screenshotBytes != null) {
+        ui.Image image = await decodeImageFromList(screenshotBytes);
+        double aspectRatio = image.width.toDouble() / image.height.toDouble();
+
+        int width = 380;
+        int height = (width / aspectRatio).round();
+
+        String base64Image = base64Encode(screenshotBytes);
+
+        bill.add(
+          LineText(
+            type: LineText.TYPE_IMAGE,
+            x: 10,
+            y: 10,
+            align: LineText.ALIGN_CENTER,
+            width: width,
+            height: height,
+            content: base64Image,
+          ),
+        );
+
+        await bluetoothPrint.printReceipt(config, bill);
+      }
+    } catch (e) {
+      debugPrint(e.toString());
+      Exception(e);
     }
-
-    ui.Image image = await decodeImageFromList(screenshotBytes);
-    double aspectRatio = image.width.toDouble() / image.height.toDouble();
-
-    int width = 380;
-    int height = (width / aspectRatio).round();
-
-    String base64Image = base64Encode(screenshotBytes);
-
-    list.add(LineText(
-      type: LineText.TYPE_IMAGE,
-      x: 10,
-      y: 10,
-      height: height,
-      weight: width,
-      content: base64Image,
-    ));
-
-    await bluetoothPrint.printLabel(config, list);
   }
 
   @override
@@ -193,7 +196,7 @@ class _MyAppState extends State<MyApp> {
                       ),
                       const Divider(),
                       OutlinedButton(
-                        onPressed: _connected ? printImage : null,
+                        onPressed: _connected ? () => printImage() : null,
                         child: const Text('print image'),
                       ),
                       Screenshot(
