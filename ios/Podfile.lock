@@ -1,0 +1,28 @@
+PODS:
+  - bluetooth_print (0.0.1):
+    - Flutter
+  - Flutter (1.0.0)
+  - print_bluetooth_thermal (0.0.1):
+    - Flutter
+
+DEPENDENCIES:
+  - bluetooth_print (from `.symlinks/plugins/bluetooth_print/ios`)
+  - Flutter (from `Flutter`)
+  - print_bluetooth_thermal (from `.symlinks/plugins/print_bluetooth_thermal/ios`)
+
+EXTERNAL SOURCES:
+  bluetooth_print:
+    :path: ".symlinks/plugins/bluetooth_print/ios"
+  Flutter:
+    :path: Flutter
+  print_bluetooth_thermal:
+    :path: ".symlinks/plugins/print_bluetooth_thermal/ios"
+
+SPEC CHECKSUMS:
+  bluetooth_print: da8f47e8881a0b1f0fd8d73cd6fa84c9bd41ac28
+  Flutter: f04841e97a9d0b0a8025694d0796dd46242b2854
+  print_bluetooth_thermal: 54a9ba9436479dd633d18f393669ee793ee498fa
+
+PODFILE CHECKSUM: 6b9eb94e9f98a329f2ef624b852a6e42d090af2b
+
+COCOAPODS: 1.14.3
